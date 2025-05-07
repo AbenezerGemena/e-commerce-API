@@ -23,26 +23,27 @@ const register = async (req, res) => {
   }
 };
 
-// const login = async (req, res) => {
-//   const { email, password } = req.body;
+const login = async (req, res) => {
+  const { email, password } = req.body;
 
-//   try {
-//     const user = await User.findByEmail(email);
-//     if (!user) {
-//       return res.status(400).json({ message: 'Invalid credentials' });
-//     }
+  try {
+    const user = await User.findByEmail(email);
+    if (!user) {
+      return res.status(400).json({ message: 'Invalid credentials' });
+    }
 
-//     const isMatch = await User.comparePasswords(password, user.password);
-//     if (!isMatch) {
-//       return res.status(400).json({ message: 'Invalid credentials' });
-//     }
+    const isMatch = await User.comparePasswords(password, user.password);
+    if (!isMatch) {
+      return res.status(400).json({ message: 'Invalid credentials' });
+    }
 
-//     const token = generateToken(user.id);
-//     res.json({ token });
-//   } catch (err) {
-//     console.error(err);
-//     res.status(500).json({ message: 'Server error' });
-//   }
-// };
+    const token = generateToken(user.id);
+    res.json({ token,message:'logged in' });
+    
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Server error' });
+  }
+};
 
-module.exports = register;
+module.exports = {register,login};
